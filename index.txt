@@ -1,0 +1,290 @@
+
+>>>oracle:::
+--------------
+Oracle is also a popular database software for database-driven web sites with high traffic.
+
+Oracle is a very powerful, robust and full featured SQL database system.
+
+
+		SQL Hosting:::
+		------------------
+
+If you want your web site to be able to store and retrieve data from a database, your web server should have access to a database-system that uses the SQL language.
+
+If your web server is hosted by an Internet Service Provider (ISP), you will have to look for SQL hosting plans.
+
+The most common SQL hosting databases are MS SQL Server, Oracle, MySQL, and MS Access.
+
+
+
+
+
+
+
+
+
+
+
+
+The SQL SELECT INTO Statement::
+----------------------------------------
+
+--->>>>>The SELECT INTO statement copies data from one table into a new table.
+
+>>>SELECT INTO Syntax
+Copy all columns into a new table:
+
+SELECT *
+INTO newtable [IN externaldb]
+FROM oldtable
+WHERE condition;
+
+>>>Copy only some columns into a new table:
+
+SELECT column1, column2, column3, ...
+INTO newtable [IN externaldb]
+FROM oldtable
+WHERE condition;
+
+
+	>>SQL SELECT INTO Examples
+
+The following SQL statement creates a backup copy of Customers:
+
+1))SELECT * INTO CustomersBackup2017
+FROM Customers;
+
+The following SQL statement uses the IN clause to copy the table into a new table in another database:
+
+2))SELECT * INTO CustomersBackup2017 IN 'Backup.mdb'
+FROM Customers;
+
+The following SQL statement copies only a few columns into a new table:
+
+3))SELECT CustomerName, ContactName INTO CustomersBackup2017
+FROM Customers;
+
+The following SQL statement copies only the German customers into a new table:
+
+SELECT * INTO CustomersGermany
+FROM Customers
+WHERE Country = 'Germany';
+
+
+
+
+		The SQL INSERT INTO SELECT StatemenT::
+		____________________________________________
+
+>>>>The INSERT INTO SELECT statement copies data from one table and inserts it into another table.
+
+>>>INSERT INTO SELECT requires that data types in source and target tables match
+The existing records in the target table are unaffected
+
+-->>INSERT INTO SELECT Syntax
+Copy all columns from one table to another table:
+
+INSERT INTO table2
+SELECT * FROM table1
+WHERE condition;
+
+Copy only some columns from one table into another table:
+
+INSERT INTO table2 (column1, column2, column3, ...)
+SELECT column1, column2, column3, ...
+FROM table1
+WHERE condition;
+
+
+
+
+
+
+
+
+
+				The SQL CASE Statement
+				_____________________________________
+
+The CASE statement goes through conditions and returns a value when the first condition is met (like an IF-THEN-ELSE statement). So, once a condition is true, it will stop reading and return the result. If no conditions are true, it returns the value in the ELSE clause.
+
+If there is no ELSE part and no conditions are true, it returns NULL.
+
+CASE Syntax
+
+CASE
+    WHEN condition1 THEN result1
+    WHEN condition2 THEN result2
+    WHEN conditionN THEN resultN
+    ELSE result
+END;
+
+
+SQL CASE Examples
+-----------------------
+
+>>Example
+
+select sal,
+case
+when sal=5000 then 'max sal'
+when sal>3000 then 'min sal'
+when sal<1000 then 'less sal'
+else 'under sal'
+end
+from emp;
+
+
+
+		
+
+
+		The SQL CREATE DATABASE Statement
+____________________________________________________________
+The CREATE DATABASE statement is used to create a new SQL database.
+
+>>Syntax
+
+CREATE DATABASE databasename;
+
+>>CREATE DATABASE Example
+
+The following SQL statement creates a database called "testDB":
+
+>>Example
+
+CREATE DATABASE testDB;
+
+******Tip: Make sure you have admin privilege before creating any database. Once a database is created, you can check it in the list of databases with the following SQL command: SHOW DATABASES;
+
+
+
+
+			The SQL DROP DATABASE Statement
+			___________________________________
+The DROP DATABASE statement is used to drop an existing SQL database.
+
+>Syntax
+
+DROP DATABASE databasename;
+****Note: Be careful before dropping a database. Deleting a database will result in loss of complete information stored in the database!
+
+DROP DATABASE Example
+The following SQL statement drops the existing database "testDB":
+
+>Example
+DROP DATABASE testDB;
+
+************Tip: Make sure you have admin privilege before dropping any database. Once a database is dropped, you can check it in the list of databases with the following SQL command: SHOW DATABASES;
+
+
+
+
+
+
+
+
+		The SQL BACKUP DATABASE Statement
+___________________________________________________________
+
+The BACKUP DATABASE statement is used in SQL Server to create a full back up of an existing SQL database.
+
+>>Syntax
+
+BACKUP DATABASE databasename
+TO DISK = 'filepath';
+
+The SQL BACKUP WITH DIFFERENTIAL Statement
+A differential back up only backs up the parts of the database that have changed since the last full database backup.
+
+>>Syntax
+BACKUP DATABASE databasename
+TO DISK = 'filepath'
+WITH DIFFERENTIAL;
+
+BACKUP DATABASE Example
+The following SQL statement creates a full back up of the existing database "testDB" to the D disk:
+
+>Example
+
+BACKUP DATABASE testDB
+TO DISK = 'D:\backups\testDB.bak';
+**********Tip: Always back up the database to a different drive than the actual database. Then, if you get a disk crash, you will not lose your backup file along with the database.
+
+BACKUP WITH DIFFERENTIAL Example
+The following SQL statement creates a differential back up of the database "testDB":
+
+Example
+BACKUP DATABASE testDB
+TO DISK = 'D:\backups\testDB.bak'
+WITH DIFFERENTIAL;
+*****Tip: A differential back up reduces the back up time (since only the changes are backed up).
+
+
+
+
+SQL Injection:::
+----------------------
+SQL injection is a code injection technique that might destroy your database.
+
+SQL injection is one of the most common web hacking techniques.
+
+SQL injection is the placement of malicious code in SQL statements, via web page input.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>SQL CREATE INDEX Statement::
+----------------------------------
+
+The CREATE INDEX statement is used to create indexes in tables.
+
+Indexes are used to retrieve data from the database more quickly than otherwise. The users cannot see the indexes, they are just used to speed up searches/queries.
+
+***Note: Updating a table with indexes takes more time than updating a table without (because the indexes also need an update). So, only create indexes on columns that will be frequently searched against.
+CREATE INDEX Syntax
+
+> Creates an index on a table. Duplicate values are allowed:
+
+	CREATE INDEX index_name
+	ON table_name (column1, column2, ...);
+
+>>CREATE UNIQUE INDEX Syntax
+
+...Creates a unique index on a table. Duplicate values are not allowed:
+
+		CREATE UNIQUE INDEX index_name
+		ON table_name (column1, column2, ...);
+
+****Note: The syntax for creating indexes varies among different databases. Therefore: Check the syntax for creating indexes in your database.
+CREATE INDEX Example
+
+ --The SQL statement below creates an index named "idx_lastname" on the "LastName" column in the "Persons" table:
+
+CREATE INDEX idx_lastname
+ON Persons (LastName);
+
+->If you want to create an index on a combination of columns, you can list the column names within the parentheses, separated by commas:
+
+CREATE INDEX idx_pname
+ON Persons (LastName, FirstName); 
+
+		drop:::
+		-------------
+
+DROP INDEX index_name; 
+
+
+
+		
+		
